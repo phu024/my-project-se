@@ -18,6 +18,7 @@ type PatientType struct {
 }
 
 type Patient struct {
+	
 	gorm.Model
 	HN   string `gorm:"uniqueIndex"`
 	Pid   string `gorm:"uniqueIndex"`

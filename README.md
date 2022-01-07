@@ -1,2 +1,2 @@
-# my-prototype-project-se
+# my-project-se
 Prototype project of Software Engineering

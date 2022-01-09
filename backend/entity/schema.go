@@ -11,6 +11,14 @@ type Gender struct {
 	Patient []Patient `gorm:"foreignKey:GenderID"`
 }
 
+type PatientRight struct {
+	gorm.Model
+	Name 		string
+	Discount	uint
+	Patient		[]Patient	`gorm:"foreignKey:PatientRightID"`
+}
+
+
 type PatientType struct {
 	gorm.Model
 	Typename string
@@ -20,8 +28,8 @@ type PatientType struct {
 type Patient struct {
 	
 	gorm.Model
-	HN   string `gorm:"uniqueIndex"`
-	Pid   string `gorm:"uniqueIndex"`
+	HN   string 
+	Pid   string 
 	FirstName string
 	LastName  string
 	Birthdate time.Time
@@ -36,5 +44,10 @@ type Patient struct {
 	//PatientTypeID ทำหน้าที่เป็น ForeignKey
 	PatientTypeID *uint
 	PatientType PatientType `gorm:"references:id"`
+	
+
+	//PatientRightID ทำหน้าที่เป็น ForeignKey
+	PatientRightID 	*uint
+	PatientRight   PatientRight `gorm:"references:id"`
 }
 

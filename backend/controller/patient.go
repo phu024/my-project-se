@@ -4,7 +4,7 @@ import (
 	"net/http"
 
     "github.com/gin-gonic/gin"
-	"github.com/sut64/team11/entity"
+	"github.com/phu024/prototype-se/entity"
 )
 
 // POST /patien
@@ -15,31 +15,31 @@ func CreatePatients(c *gin.Context) {
 	var gender entity.Gender
 	var patientright entity.PatientRight
 
-	// ผลลัพธ์ที่ได้จากขั้นตอนที่ 9 จะถูก bind เข้าตัวแปร patient
+	// ผลลัพธ์ที่ได้จากขั้นตอนที่ จะถูก bind เข้าตัวแปร patient
 	if err := c.ShouldBindJSON(&patient); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	// 10: ค้นหา patienttype ด้วย id
+	// : ค้นหา patienttype ด้วย id
 	if tx := entity.DB().Where("id = ?", patient.PatientTypeID).First(&patienttype); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "patienttype not found"})
 		return
 	}
 
-	// 11: ค้นหา gender ด้วย id
+	// : ค้นหา gender ด้วย id
 	if tx := entity.DB().Where("id = ?", patient.GenderID).First(&gender); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "underlying_disease not found"})
 		return
 	}
 
-	// 12: ค้นหา patientright ด้วย id
+	// : ค้นหา patientright ด้วย id
 	if tx := entity.DB().Where("id = ?", patient.PatientRightID).First(&patientright); tx.RowsAffected == 0 {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Allergy not found"})
 		return
 	}
 
-	// 14: สร้าง patient
+	// : สร้าง patient
 	pt := entity.Patient{
 
 		Gender:             gender,             // โยงความสัมพันธ์กับ Entity gender
@@ -67,24 +67,24 @@ func CreatePatients(c *gin.Context) {
 func GetPatient(c *gin.Context) {
 	var patient entity.Patient
 	id := c.Param("id")
-	if err := entity.DB().Preload("Gender").Preload("Patient_type").Preload("Patient_right").Raw("SELECT * FROM patients WHERE id = ?", id).Find(&patient).Error; err != nil {
+	if err := entity.DB().Preload("Gender").Preload("PatientType").Preload("PatientRight").Raw("SELECT * FROM patients WHERE id = ?", id).Find(&patient).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"data": patient})
 }
 
-// GET /watch_underlying_diseases
+// GET /patients
 func ListPatients(c *gin.Context) {
 	var patients []entity.Patient
-	if err := entity.DB().Preload("Gender").Preload("Patient_type").Preload("Patient_right").Raw("SELECT * FROM patients").Find(&patients).Error; err != nil {
+	if err := entity.DB().Preload("Gender").Preload("PatientType").Preload("PatientRight").Raw("SELECT * FROM patients").Find(&patients).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"data": patients})
 }
 
-// DELETE /watch_underlying_diseases/:id
+// DELETE /patient/:id
 func DeletePatient(c *gin.Context) {
 	id := c.Param("id")
 	if tx := entity.DB().Exec("DELETE FROM patients WHERE id = ?", id); tx.RowsAffected == 0 {
@@ -95,7 +95,7 @@ func DeletePatient(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": id})
 }
 
-// PATCH /watch_underlying_diseases
+// PATCH /patient
 func UpdatePatient(c *gin.Context) {
 	var patient entity.Patient
 	if err := c.ShouldBindJSON(&patient); err != nil {

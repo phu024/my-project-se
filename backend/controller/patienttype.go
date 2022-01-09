@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/sut64/team11/entity"
+	"github.com/phu024/prototype-se/entity"
 )
 
 // GET /PatientType/:id
@@ -20,7 +20,7 @@ func GetPatientType(c *gin.Context) {
 }
 
 // GET All /PatientTypes
-func ListPatientType(c *gin.Context) {
+func ListPatientTypes(c *gin.Context) {
 	var patienttypes []entity.PatientType
 	if err := entity.DB().Raw("SELECT * FROM patient_types").Scan(&patienttypes).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

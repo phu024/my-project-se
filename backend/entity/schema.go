@@ -25,6 +25,14 @@ type PatientType struct {
 	Patient []Patient `gorm:"foreignKey:PatientTypeID"`
 }
 
+type User struct {
+	gorm.Model
+	Name string
+	Email string
+	Password string
+	//Role string
+}
+
 type Patient struct {
 	
 	gorm.Model

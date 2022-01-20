@@ -21,12 +21,8 @@ function Home() {
   return (
     <div>
       <Container className={classes.container} maxWidth="md">
-        <h1 style={{ textAlign: "center" }}>ระบบจัดการคนไข้ใน</h1>
-        <h4></h4>
-        <p>
-          
-        </p>
-        <img src={hospital_medical} alt="hospital_medical" style={{ width: "100%" }} />
+        <p style={{fontSize: 40, textAlign: "center", color: "#009688" }}>ระบบจัดการคนไข้ใน</p>
+          <img src={hospital_medical} alt="hospital_medical" />
       </Container>
     </div>
   );

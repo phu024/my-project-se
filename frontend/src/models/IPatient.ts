@@ -1,12 +1,12 @@
 import { PatientrightInterface } from './IPatientright';
 import { PatienttypeInterface } from './IPatienttype';
 import { GenderInterface } from './IGender';
-export interface IPatientInterface {
+export interface PatientInterface {
     ID: number,
     HN: string,
     Pid: string,
-    Firstname: string,
-    Lastname: string,
+    FirstName: string,
+    LastName: string,
     Birthdate: Date,
     Age: number,
     DateAdmit: Date,

@@ -15,7 +15,7 @@ func CreatePatients(c *gin.Context) {
 	var gender entity.Gender
 	var patientright entity.PatientRight
 
-	// ผลลัพธ์ที่ได้จากขั้นตอนที่ จะถูก bind เข้าตัวแปร patient
+	// bind เข้าตัวแปร patient
 	if err := c.ShouldBindJSON(&patient); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return

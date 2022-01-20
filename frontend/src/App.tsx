@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import clsx from "clsx";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import {BrowserRouter, Routes,Route,Link} from "react-router-dom";
 import {
   createStyles,
   makeStyles,
@@ -27,9 +27,11 @@ import { createTheme } from '@material-ui/core/styles';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 import HomeIcon from "@material-ui/icons/Home";
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
 
 import Home from "./components/Home";
 import SignIn from "./components/SignIn";
+import CreatePatient from "./components/CreatePatient";
 
 const drawerWidth = 240;
 
@@ -132,6 +134,7 @@ export default function MiniDrawer() {
 
   const menu = [
     { name: "หน้าแรก", icon: <HomeIcon style={{ color: '#009688',fontSize: 30 }} />, path: "/" },
+    { name: "บันทึกการรับเข้าผู้ป่วย", icon: <PersonAddIcon />, path: "/CreatePatient" },
   ];
 
   useEffect(() => {
@@ -153,7 +156,7 @@ export default function MiniDrawer() {
   return (
     <ThemeProvider theme={theme}>
       <div className={classes.root}>
-        <Router>
+        <BrowserRouter>
           <CssBaseline />
           {token && (
             <>
@@ -226,10 +229,11 @@ export default function MiniDrawer() {
             <div>
               <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/CreatePatient" element={<CreatePatient />} />
               </Routes>
             </div>
           </main>
-        </Router>
+        </BrowserRouter>
       </div>
     </ThemeProvider>
   );

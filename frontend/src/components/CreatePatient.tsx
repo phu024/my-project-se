@@ -145,7 +145,7 @@ function CreatePatient() {
             FirstName: patient.FirstName,
             LastName: patient.LastName,
             Birthdate: selectedBirthdate,
-            Age: patient.Age,
+            Age: convertType(patient.Age),
             DateAdmit: selectedDateAdmit,
             Symptom: patient.Symptom,
             GenderID: convertType(patient.GenderID),

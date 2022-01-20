@@ -130,7 +130,7 @@ function SignIn() {
           <Button
             fullWidth
             variant="contained"
-            color="primary"
+            style={{ color: "#fff", backgroundColor: "#009688" }}
             className={classes.submit}
             onClick={login}
           >

@@ -224,7 +224,7 @@ function CreatePatient() {
                                     name="DateAdmit"
                                     inputVariant="outlined"
                                     size="small"
-                                    format="dd-MMM-yyyy HH:mm"
+                                    format="dd/MM/yyyy HH:mm"
                                     value={selectedDateAdmit}
                                     onChange={handleDateAdmit}
                                 />
@@ -339,7 +339,7 @@ function CreatePatient() {
                                     name="Birthdate"
                                     inputVariant="outlined"
                                     size="small"
-                                    format="dd MMMM yyyy"
+                                    format="dd/MM/yyyy"
                                     value={selectedBirthdate}
                                     onChange={handleBirthdate}
                                 />

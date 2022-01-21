@@ -53,9 +53,12 @@ function SignIn() {
       .then((response) => response.json())
       .then((res) => {
         if (res.data) {
+          console.log(res.data);
           setSuccess(true);
           localStorage.setItem("token", res.data.token);
           localStorage.setItem("uid", res.data.id);
+          localStorage.setItem("roleID", res.data.employee.RoleID);
+          localStorage.setItem("employee", JSON.stringify(res.data.employee));
           window.location.reload()
         } else {
           setError(true);

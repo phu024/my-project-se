@@ -28,18 +28,35 @@ func SetupDatabase() {
 		&PatientType{},
 		&PatientRight{},
 		&Patient{},
-		&User{},
+		&Employee{},
 	)
 	db = database
 
+	//Role Data
+	doctor := Role{
+		Position: "Doctor",
+	}
+	db.Model(&Role{}).Create(&doctor)
+	nurse := Role{
+		Position: "Nurse",
+	}
+	db.Model(&Role{}).Create(&nurse)
+
 	password, err := bcrypt.GenerateFromPassword([]byte("123456"), 14)
-	db.Model(&User{}).Create(&User{
-		Name:     "Phuwason",
-		Email:    "p@p.com",
+	db.Model(&Employee{}).Create(&Employee{
+		Name:     "Test Nurse",
+		Email:    "n@n.com",
 		Password: string(password),
+		Role:     nurse,
+	})
+	db.Model(&Employee{}).Create(&Employee{
+		Name:     "Test Doctor",
+		Email:    "d@d.com",
+		Password: string(password),
+		Role:     doctor,
 	})
 
-	var Phuwadon User
+	var Phuwadon Employee
 	db.Raw("SELECT * FROM users WHERE email = ?", "p@p.com").Scan(&Phuwadon)
 
 	// Gender Data (ข้อมูลเพศ)

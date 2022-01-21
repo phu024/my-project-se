@@ -25,14 +25,6 @@ type PatientType struct {
 	Patient []Patient `gorm:"foreignKey:PatientTypeID"`
 }
 
-type User struct {
-	gorm.Model
-	Name string
-	Email string
-	Password string
-	//Role string
-}
-
 type Patient struct {
 	
 	gorm.Model
@@ -59,3 +51,19 @@ type Patient struct {
 	PatientRight   PatientRight `gorm:"references:id"`
 }
 
+type Employee struct {
+	gorm.Model
+	Name string
+	Email string
+	Password string
+
+	//RoleID ทำหน้าที่เป็น ForeignKey
+	RoleID *uint
+	Role Role `gorm:"references:id"`
+}
+
+type Role struct {
+	gorm.Model
+	Position string
+	Employee []Employee `gorm:"foreignKey:RoleID"`
+}

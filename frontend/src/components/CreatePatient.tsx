@@ -425,7 +425,7 @@ function CreatePatient() {
                 <Grid item xs={12} sm={2}>
                     <Button
                         component={RouterLink}
-                        to="/patients"
+                        to="/"
                         variant="contained"
                         color="primary"
                         startIcon={<ReplyIcon />}

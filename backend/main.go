@@ -37,15 +37,20 @@ func main() {
 			protected.GET("/gender/:id", controller.GetGender)
 
 			// user Routes
-			protected.GET("/users",controller.ListUsers)
-			protected.GET("/user/:id",controller.GetUser)
+			protected.GET("/users",controller.ListEmployees)
+			protected.GET("/user/:id",controller.GetEmployee)
 			//protected.POST("/users",controller.CreateUser)
-			protected.PATCH("/users",controller.UpdateUser)
-			protected.DELETE("/users/:id",controller.DeleteUser)
+			protected.PATCH("/users",controller.UpdateEmployee)
+			protected.DELETE("/users/:id",controller.DeleteEmployee)
+
+			// role Routes
+			protected.GET("/roles",controller.ListRoles)
+			protected.GET("/role/:id",controller.GetRole)
+			
 		}
 	}
 	// User Routes
-	r.POST("/users", controller.CreateUser)
+	r.POST("/users", controller.CreateEmployee)
 
 	// Authentication Routes
 	r.POST("/login", controller.Login)

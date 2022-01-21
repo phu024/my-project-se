@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import clsx from "clsx";
-import {BrowserRouter, Routes,Route,Link} from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import {
   createStyles,
   makeStyles,
@@ -25,13 +25,18 @@ import Button from "@material-ui/core/Button";
 import { ThemeProvider } from '@material-ui/styles';
 import { createTheme } from '@material-ui/core/styles';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-
+import Avatar from '@material-ui/core/Avatar';
+import FaceIcon from '@material-ui/icons/Face';
+import Chip from '@material-ui/core/Chip';
 import HomeIcon from "@material-ui/icons/Home";
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 
 import Home from "./components/Home";
 import SignIn from "./components/SignIn";
-import CreatePatient from "./components/CreatePatient";
+import CreatePatient from "./components/CreatePatient"
+import { EmployeeInterface } from "./models/IEmployee";
+import { RoleInterface } from "./models/IRole";
+import { log } from "console";
 
 const drawerWidth = 240;
 
@@ -124,6 +129,8 @@ export default function MiniDrawer() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [token, setToken] = React.useState<String>("");
+  const [role, setRole] = React.useState<RoleInterface>();
+  const Employee: EmployeeInterface = (JSON.parse(localStorage.getItem("employee") || ""));
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -132,13 +139,36 @@ export default function MiniDrawer() {
     setOpen(false);
   };
 
+  //Get Data
+  const apiUrl = "http://localhost:8080";
+  const requestOptions = {
+    method: "GET",
+    headers: { Authorization: `Bearer ${localStorage.getItem("token")}`, "Content-Type": "application/json" },
+  };
+  const getRole = async () => {
+    let rid = localStorage.getItem("roleID");
+    fetch(`${apiUrl}/role/${rid}`, requestOptions)
+      .then((response) => response.json())
+      .then((res) => {
+        if (res.data) {
+          setRole(res.data);
+        } else {
+          console.log("else");
+        }
+      });
+  };
+
+
+
+
   const menu = [
-    { name: "หน้าแรก", icon: <HomeIcon style={{ color: '#009688',fontSize: 30 }} />, path: "/" },
+    { name: "หน้าแรก", icon: <HomeIcon style={{ color: '#009688', fontSize: 30 }} />, path: "/" },
     { name: "บันทึกการรับเข้าผู้ป่วย", icon: <PersonAddIcon />, path: "/CreatePatient" },
   ];
 
   useEffect(() => {
     const token = localStorage.getItem("token");
+    getRole()
     if (token) {
       setToken(token);
     }
@@ -181,9 +211,16 @@ export default function MiniDrawer() {
                   <Typography variant="h6" className={classes.title}>
                     523332 Software Engineering
                   </Typography>
-                  <Button color="inherit" onClick={signout} style={{fontFamily:"Kanit"}}>
-                    <ExitToAppIcon style={{ fontSize: 30, marginRight:2 }} />
-                    ออกจากระบบ
+                  <Chip 
+                    size="medium"
+                    icon={<FaceIcon style={{color:'#009688'}} />} 
+                    label={Employee.Name +" ( "+ role?.Position+" )"}
+                    variant="outlined"
+                    style={{ backgroundColor: '#fff' ,fontSize: '1rem', color: '#009688' }}
+                  />
+                  <Button color="inherit" onClick={signout} style={{ fontFamily: "Kanit" }}>
+                    <ExitToAppIcon style={{ fontSize: 30, marginRight: 2 }} />
+                    
                   </Button>
                 </Toolbar>
               </AppBar>
@@ -211,14 +248,18 @@ export default function MiniDrawer() {
                 </div>
                 <Divider />
                 <List>
-                  {menu.map((item, index) => (
-                    <Link to={item.path} key={item.name} className={classes.a}>
-                      <ListItem button>
-                        <ListItemIcon>{item.icon}</ListItemIcon>
-                        <ListItemText primary={item.name} />
-                      </ListItem>
-                    </Link>
-                  ))}
+                  <>
+                    {
+                      menu.map((item, index) => (
+                        <Link to={item.path} key={item.name} className={classes.a}>
+                          <ListItem button>
+                            <ListItemIcon>{item.icon}</ListItemIcon>
+                            <ListItemText primary={item.name} />
+                          </ListItem>
+                        </Link>
+                      ))
+                    }
+                  </>
                 </List>
               </Drawer>
             </>

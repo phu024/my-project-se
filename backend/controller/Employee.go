@@ -12,7 +12,7 @@ import (
 // List all Employees
 func ListEmployees(c *gin.Context) {
 	var Employees []entity.Employee
-	if err := entity.DB().Raw("SELECT * FROM Employees").Scan(&Employees).Error; err != nil {
+	if err := entity.DB().Preload("Role").Raw("SELECT * FROM employees").Find(&Employees).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
@@ -25,7 +25,7 @@ func ListEmployees(c *gin.Context) {
 func GetEmployee(c *gin.Context) {
 	var Employee entity.Employee
 	id := c.Param("id")
-	if err := entity.DB().Raw("SELECT * FROM employees WHERE id = ?", id).Scan(&Employee).Error; err != nil {
+	if err := entity.DB().Preload("Role").Raw("SELECT * FROM employees WHERE id = ?", id).Find(&Employee).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}

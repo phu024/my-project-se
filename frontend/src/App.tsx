@@ -35,6 +35,7 @@ import SignIn from "./components/SignIn";
 import CreatePatient from "./components/CreatePatient"
 import { EmployeeInterface } from "./models/IEmployee";
 import { RoleInterface } from "./models/IRole";
+import ListPatient from "./components/listPatient"; 
 
 const drawerWidth = 240;
 
@@ -266,6 +267,7 @@ export default function MiniDrawer() {
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/CreatePatient" element={<CreatePatient />} />
+                <Route path="/listPatient" element={<ListPatient/>} />
               </Routes>
             </div>
           </main>

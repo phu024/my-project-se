@@ -13,8 +13,8 @@ export interface PatientInterface {
     Symptom: string,
     GenderID: number,
     Gender: GenderInterface,
-    PatienttypeID: number,
-    Patienttype: PatienttypeInterface
-    PatientrightID: number,
-    Patientright: PatientrightInterface
+    PatientTypeID: number,
+    PatientType: PatienttypeInterface
+    PatientRightID: number,
+    PatientRight: PatientrightInterface
 }

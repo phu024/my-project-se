@@ -13,7 +13,6 @@ import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert, { AlertProps } from "@material-ui/lab/Alert";
 import { AlertTitle } from "@material-ui/lab";
 import SaveIcon from "@material-ui/icons/Save";
-import ReplyIcon from "@material-ui/icons/Reply";
 import Divider from "@material-ui/core/Divider";
 import DateFnsUtils from "@date-io/date-fns";
 import Link from "@material-ui/core/Link";
@@ -26,9 +25,9 @@ import {
 } from "@material-ui/pickers";
 import Select from "@material-ui/core/Select";
 //import Models
-import { PatienttypeInterface } from "../models/IPatienttype";
+import { PatientTypeInterface } from "../models/IPatientType";
 import { PatientInterface } from "../models/IPatient";
-import { PatientrightInterface } from "../models/IPatientright";
+import { PatientRightInterface } from "../models/IPatientRight";
 import { GenderInterface } from "../models/IGender";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -58,8 +57,8 @@ function CreatePatient() {
   const classes = useStyles();
   //set state
   const [genders, setGenders] = useState<GenderInterface[]>([]);
-  const [patienttype, setPatienttype] = useState<PatienttypeInterface[]>([]);
-  const [patientright, setPatientright] = useState<PatientrightInterface[]>([]);
+  const [patienttype, setPatienttype] = useState<PatientTypeInterface[]>([]);
+  const [patientright, setPatientright] = useState<PatientRightInterface[]>([]);
   const [patient, setPatient] = useState<Partial<PatientInterface>>({});
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
@@ -284,7 +283,7 @@ function CreatePatient() {
                   <option aria-label="None" value="">
                     กรุณาเลือกประเภทผู้ป่วย
                   </option>
-                  {patienttype.map((item: PatienttypeInterface) => (
+                  {patienttype.map((item: PatientTypeInterface) => (
                     <option value={item.ID} key={item.ID}>
                       {item.Typename}
                     </option>
@@ -429,7 +428,7 @@ function CreatePatient() {
                   <option aria-label="None" value="">
                     กรุณาเลือกสิทธิการรักษา
                   </option>
-                  {patientright.map((item: PatientrightInterface) => (
+                  {patientright.map((item: PatientRightInterface) => (
                     <option value={item.ID} key={item.ID}>
                       {item.Name}
                     </option>

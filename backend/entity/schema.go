@@ -4,6 +4,8 @@ import (
 	"time"
 
 	"gorm.io/gorm"
+
+	"github.com/asaskevich/govalidator"
 )
 type Gender struct {
 	gorm.Model
@@ -28,14 +30,14 @@ type PatientType struct {
 type Patient struct {
 	
 	gorm.Model
-	HN   string 
-	Pid   string 
+	HN        string `valid:"matches(^HN\\d{6}$)"`
+	Pid       string `valid:"matches(^[1-9]\\d{12}$)"`
 	FirstName string
 	LastName  string
-	Birthdate time.Time
-	Age       uint
+	Birthdate time.Time `valid:"past~Birthdate must be in the past"`
+	Age       uint `valid:"range(0|120)"`
 	DateAdmit time.Time
-	Symptom  string
+	Symptom   string
 
 	//GenderID ทำหน้าที่เป็น ForeignKey
 	GenderID *uint
@@ -66,4 +68,21 @@ type Role struct {
 	gorm.Model
 	Position string
 	Employee []Employee `gorm:"foreignKey:RoleID"`
+}
+
+func init() {
+	govalidator.CustomTypeTagMap.Set("past", func(i interface{}, context interface{}) bool {
+		t := i.(time.Time)
+		return t.Before(time.Now())
+	})
+
+	govalidator.CustomTypeTagMap.Set("future", func(i interface{}, context interface{}) bool {
+		t := i.(time.Time)
+		return t.After(time.Now())
+	})
+
+	govalidator.CustomTypeTagMap.Set("Now", func(i interface{}, context interface{}) bool {
+		t := i.(time.Time)
+		return t.Equal(time.Now())
+	})
 }
